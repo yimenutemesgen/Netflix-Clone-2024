@@ -1,29 +1,6 @@
 
 
-// import React, { useEffect, useState } from 'react'
-// import axios from "../Utilies/axios"
-// import requests from '../Utilies/requests';
 
-
-// const Row = ({title,fetchUrl}) => {
-//     const [movies, setMovies] = useState([]);
-//     useEffect(()=>{
-//       (async ()=>{
-//         const request= await axios.get(requests.fetchNetflixOriginals)
-//         console.log(request)
-//       })()
-//     },[]);
-//   return (
-//     <div>
-//       <h2>{title}</h2>
-//     </div>
-//   )
-// }
-
-// export default Row
-
-
-// src/components/Row.js
 import React, { useState, useEffect } from 'react';
 import axios from '../utilities/axios'; // Make sure to set up axios to have the base URL
 import './Row.css';
@@ -32,17 +9,34 @@ const base_url = "https://image.tmdb.org/t/p/original/";
 
 function Row({ title, fetchUrl, isLargeRow }) {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchData() {
-      const request = await axios.get(fetchUrl);
-      // console.log(request)
-      setMovies(request.data.results);
-      return request;
+      try {
+        const request = await axios.get(fetchUrl);
+        if (isMounted) {
+          setMovies(request.data.results);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        setLoading(false);
+      }
     }
 
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [fetchUrl]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="row">
@@ -53,7 +47,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
             key={movie.id}
             className={`row__poster ${isLargeRow && "row__posterLarge"}`}
             src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
-            alt={movie.name}
+            alt={movie.name || movie.title}
           />
         ))}
       </div>
@@ -62,5 +56,3 @@ function Row({ title, fetchUrl, isLargeRow }) {
 }
 
 export default Row;
-
-

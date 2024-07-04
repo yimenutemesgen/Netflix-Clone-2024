@@ -1,33 +1,47 @@
+
+
+
+
 import React, { useEffect, useState } from "react";
 import axios from "../utilities/axios";
 import requests from "../utilities/requests";
-import './Banner.css'
-
+import './Banner.css';
 
 function Banner() {
-  const [movie, setMovie] = useState([]);
+  const [movie, setMovie] = useState({});
+
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchData() {
-      const request = await axios.get(requests.fetchNetflixOriginals);
-      setMovie(
-        request.data.results[
-          Math.floor(Math.random() * request.data.results.length - 1)
-        ]
-      );
-      return request;
+      try {
+        const request = await axios.get(requests.fetchNetflixOriginals);
+        if (isMounted) {
+          setMovie(
+            request.data.results[
+              Math.floor(Math.random() * request.data.results.length)
+            ]
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
     }
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   console.log(movie);
 
-
-    function truncate(str, n) {
+  function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + '...' : str;
   }
 
   return (
- <header
+    <header
       className="banner"
       style={{
         backgroundSize: 'cover',
@@ -44,7 +58,7 @@ function Banner() {
           <button className="banner_button">My List</button>
         </div>
         <h1 className="banner_description">
-          {truncate (movie?.overview,150)}
+          {truncate(movie?.overview, 150)}
         </h1>
       </div>
       <div className="banner--fadeBottom" />
