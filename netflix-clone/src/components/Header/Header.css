@@ -28,51 +28,99 @@
 }
 
 
-.header_outer_container {
+/* .header_outer_container {
     background-color: #141414;
     position: sticky;
-    /* background-color: transparent; */
+    background-color: transparent;
     transition-timing-function: ease-in;
+    color: #111;
     transition: all 0.5s;
     height: 10vh;
     padding: 10px 20px;
     z-index: 1;
 }
 
+.
+
+
+
+
+
+/* General container for the header */
+.header_outer_container {
+    position: fixed;
+    background-color: transparent;
+    transition-timing-function: ease-in;
+    /* padding: 10px 20px; */
+    /* color: #111; */
+    height: 10vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    transition: all 0.5s ease;
+}
+
+/* Style when the header background should be black */
+.nav__black {
+    background-color: black;
+}
+
+/* Main container for header content */
 .header_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 30px;
 }
 
-.header_left ul,
+/* Style for the left side of the header */
+.header_left ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.header_left ul li {
+    margin-right: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Style for the logo */
+.logo {
+    height: 25px;
+    object-fit: contain;
+}
+
+/* Style for the right side of the header */
 .header_right ul {
     display: flex;
-    list-style: none;
-    margin: 0;
+    list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
-.header_left ul li,
 .header_right ul li {
-    color: #fff;
-    margin: 0 10px;
+    margin-left: 20px;
+    color: white;
     cursor: pointer;
     display: flex;
     align-items: center;
 }
 
-.header_left ul li:hover,
-.header_right ul li:hover {
-    color: #e50914;
+/* Icon styles */
+.header_right ul li svg {
+    font-size: 24px;
 }
 
-.logo {
-    margin-right: 20px;
-}
-
-.header_right ul li {
+/* Additional styling for dropdown icon */
+.header_right ul li:last-child {
     display: flex;
     align-items: center;
-    justify-content: center;
+}
+
+.header_right ul li:last-child svg {
+    margin-left: 5px;
 }

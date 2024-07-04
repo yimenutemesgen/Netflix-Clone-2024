@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header'
 import Row from '../../components/Row'
 import requests from "../../utilities/requests"
 import Banner from '../../components/Banner'
-// import Footer from '../../components/Footer/Footer'
+import Footer from '../../components/Footer/Footer'
 
 const Home = () => {
   return (
@@ -19,7 +19,7 @@ const Home = () => {
       <Row title="Horror Movies" fetchUrl={requests.fetchHorrorMovies} />
       <Row title="Romance Movies" fetchUrl={requests.fetchRomanceMovies} />
       <Row title="Documentaries" fetchUrl={requests.fetchDocumentaries} />
-      {/* <Footer/> */}
+      <Footer/>
     </>
   )
 }
